@@ -186,6 +186,9 @@
         // number of years either side, or array of upper/lower range
         yearRange: 10,
 
+        // filters
+        filters: [],
+
         // used internally (don't config outside)
         minYear: 0,
         maxYear: 9999,
@@ -825,6 +828,11 @@
                     isSelected = isDate(this._d) ? compareDates(day, this._d) : false,
                     isToday = compareDates(day, now),
                     isEmpty = i < before || i >= (days + before);
+
+                for (var j = 0; j < opts.filters.length; j++) {
+                    isDisabled = isDisabled || opts.filters[j](day);
+                    j++;
+                }
 
                 row.push(renderDay(1 + (i - before), isSelected, isToday, isDisabled, isEmpty));
 
